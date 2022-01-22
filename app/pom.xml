@@ -8,7 +8,7 @@
 		<version>2.2.4.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.DPT</groupId>
+	<groupId>com.dpt3</groupId>
 	<artifactId>login</artifactId>
 	<version>release</version>
 	<packaging>war</packaging>
@@ -17,7 +17,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<sonar.organization>stsproject</sonar.organization>
+		<sonar.organization>dpt3pro</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 
