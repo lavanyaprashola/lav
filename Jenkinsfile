@@ -23,7 +23,7 @@ pipeline {
     steps {
       withSonarQubeEnv('sonar') {           
 				dir('app'){
-          sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=dpt3pro'
+          sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar'
         }
     }
     }
@@ -33,15 +33,15 @@ pipeline {
             steps {
                 rtServer (
                     id: "jfrog",
-                    url: "https://valdpt3.jfrog.io/artifactory",
+                    url: "https://dpt4hub.jfrog.io/artifactory",
                     credentialsId: "jfrog"
                 )
 
                 rtMavenDeployer (
                     id: "MAVEN_DEPLOYER",
                     serverId: "jfrog",
-                    releaseRepo: "valdpt3-libs-release-local",
-                    snapshotRepo: "valdpt3-libs-snapshot-local"
+                    releaseRepo: "dftweb-libs-release-local",
+                    snapshotRepo: "dftweb-libs-snapshot-local"
                 )
 
                 rtMavenResolver (
@@ -88,7 +88,7 @@ stage('Docker Build') {
         dir('charts') {
         withCredentials([usernamePassword(credentialsId: 'jfrog', usernameVariable: 'username', passwordVariable: 'password')]) {
              sh 'sudo /usr/local/bin/helm package webapp'
-             sh 'sudo /usr/local/bin/helm push-artifactory webapp-1.0.tgz https://valdpt3.jfrog.io/artifactory/dpt3-helm-local --username $username --password $password'
+             sh 'sudo /usr/local/bin/helm push-artifactory webapp-1.0.tgz https://dpt4hub.jfrog.io/artifactory/dft01-helm-local --username $username --password $password'
 		  }
         }
         }
