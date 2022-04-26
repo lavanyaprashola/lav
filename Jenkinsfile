@@ -7,7 +7,7 @@ pipeline {
 
   stage ('Checkout SCM'){
         steps {
-          checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git', url: 'https://dptrealtime@bitbucket.org/dptrealtime/loginapp-cicd-integration.git']]])
+          checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git', url: 'https://Maiyappanshivaji@bitbucket.org/maiyappanshivaji/loginapp-cicd-integration.git']]])
       }
    }
 	  
@@ -23,7 +23,7 @@ pipeline {
     steps {
       withSonarQubeEnv('sonar') {           
 				dir('app'){
-          sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar'
+          sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=jenkins1052'
         }
     }
     }
@@ -33,15 +33,15 @@ pipeline {
             steps {
                 rtServer (
                     id: "jfrog",
-                    url: "https://dpt4hub.jfrog.io/artifactory",
+                    url: "https://dtdemoaspire.jfrog.io/artifactory",
                     credentialsId: "jfrog"
                 )
 
                 rtMavenDeployer (
                     id: "MAVEN_DEPLOYER",
                     serverId: "jfrog",
-                    releaseRepo: "dftweb-libs-release-local",
-                    snapshotRepo: "dftweb-libs-snapshot-local"
+                    releaseRepo: "dtjen-libs-release-local",
+                    snapshotRepo: "dtjen-libs-snapshot-local"
                 )
 
                 rtMavenResolver (
@@ -69,7 +69,7 @@ stage('Docker Build') {
       steps {
         script {
               docker.withRegistry( 'https://registry.hub.docker.com', 'docker' ) {
-              def customImage = docker.build("dpthub/webapp")
+              def customImage = docker.build("maiyappan/webapp01")
               customImage.push()
           }
       }
@@ -88,7 +88,7 @@ stage('Docker Build') {
         dir('charts') {
         withCredentials([usernamePassword(credentialsId: 'jfrog', usernameVariable: 'username', passwordVariable: 'password')]) {
              sh 'sudo /usr/local/bin/helm package webapp'
-             sh 'sudo /usr/local/bin/helm push-artifactory webapp-1.0.tgz https://dpt4hub.jfrog.io/artifactory/dft01-helm-local --username $username --password $password'
+             sh 'sudo /usr/local/bin/helm push-artifactory webapp-1.0.tgz https://dtdemoaspire.jfrog.io/artifactory/helmjen-helm-local --username $username --password $password'
 		  }
         }
         }
