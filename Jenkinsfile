@@ -33,15 +33,15 @@ pipeline {
             steps {
                 rtServer (
                     id: "jfrog",
-                    url: "https://dtdemoaspire.jfrog.io/artifactory",
+                    url: "https://awscloudplatform.jfrog.io/artifactory",
                     credentialsId: "jfrog"
                 )
 
                 rtMavenDeployer (
                     id: "MAVEN_DEPLOYER",
                     serverId: "jfrog",
-                    releaseRepo: "dtjen-libs-release-local",
-                    snapshotRepo: "dtjen-libs-snapshot-local"
+                    releaseRepo: "spidymaven-libs-release-local",
+                    snapshotRepo: "spidymaven-libs-snapshot-local"
                 )
 
                 rtMavenResolver (
