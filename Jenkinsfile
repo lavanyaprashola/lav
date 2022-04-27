@@ -88,7 +88,7 @@ stage('Docker Build') {
         dir('charts') {
         withCredentials([usernamePassword(credentialsId: 'jfrog', usernameVariable: 'username', passwordVariable: 'password')]) {
              sh 'sudo /usr/local/bin/helm package webapp'
-             sh 'sudo /usr/local/bin/helm push-artifactory webapp-1.0.tgz https://dtdemoaspire.jfrog.io/artifactory/helmjen-helm-local --username $username --password $password'
+             sh 'sudo /usr/local/bin/helm push-artifactory webapp-1.0.tgz https://awscloudplatform.jfrog.io/artifactory/spidyhelm-helm-local --username $username --password $password'
 		  }
         }
         }
